@@ -1,0 +1,105 @@
+================================================================================
+                    RAG PROJECT - USEFUL COMMANDS CHEATSHEET
+================================================================================
+
+--------------------------------------------------------------------------------
+1. DATABASE (POSTGRESQL / PGVECTOR)
+--------------------------------------------------------------------------------
+
+# View total chunk count
+./venv/bin/python3 -c "from db import engine; from sqlalchemy import text; print('Total chunks:', engine.connect().execute(text('SELECT count(*) FROM chunks')).scalar())"
+
+# View distinct indexed documents and their chunk counts
+./venv/bin/python3 -c "from db import engine; from sqlalchemy import text; print(engine.connect().execute(text('SELECT source, count(*) FROM chunks GROUP BY source')).fetchall())"
+
+# Clear / Flush ALL chunks from database
+./venv/bin/python3 -c "from db import engine; from sqlalchemy import text; engine.connect().execute(text('TRUNCATE TABLE chunks RESTART IDENTITY;')); print('Chunks table cleared!')"
+
+# Clear ALL chunks via Docker
+docker exec -it rag-postgres-1 psql -U postgres -d rag -c "TRUNCATE TABLE chunks RESTART IDENTITY;"
+
+# Delete chunks for a specific document only
+docker exec -it rag-postgres-1 psql -U postgres -d rag -c "DELETE FROM chunks WHERE source = 'temp/My_Resume.pdf';"
+
+# Remove duplicates while keeping 1 unique copy of each chunk
+docker exec -it rag-postgres-1 psql -U postgres -d rag -c "DELETE FROM chunks WHERE id NOT IN (SELECT MIN(id) FROM chunks GROUP BY content, tenant);"
+
+# Connect to Postgres interactive shell inside Docker
+docker exec -it rag-postgres-1 psql -U postgres -d rag
+
+
+--------------------------------------------------------------------------------
+2. CACHE & QUEUE (REDIS)
+--------------------------------------------------------------------------------
+
+# View all semantic cache keys
+./venv/bin/python3 -c "import redis; r = redis.Redis(host='localhost', port=6379, decode_responses=True); print('Cache keys:', r.keys('semantic_cache:*'))"
+
+# Flush ONLY semantic cache keys (keeps Celery task queues intact)
+./venv/bin/python3 -c "import redis; r = redis.Redis(host='localhost', port=6379); [r.delete(k) for k in r.keys('semantic_cache:*')]; print('Semantic cache cleared!')"
+
+# Flush entire Redis database (clears cache and pending queues)
+docker exec -it rag-redis-1 redis-cli FLUSHDB
+
+# Connect to Redis interactive CLI
+docker exec -it rag-redis-1 redis-cli
+
+
+--------------------------------------------------------------------------------
+3. SERVICES & DOCKER MANAGEMENT
+--------------------------------------------------------------------------------
+
+# Start Postgres and Redis containers
+docker compose up -d
+
+# Check status of containers
+docker compose ps
+
+# Stop containers
+docker compose down
+
+# Check running Python/Uvicorn/Celery processes
+ps aux | grep -E "uvicorn|celery"
+
+
+--------------------------------------------------------------------------------
+4. RUNNING THE APPLICATION
+--------------------------------------------------------------------------------
+
+# Run FastAPI app with auto-reload
+./venv/bin/uvicorn main:app --reload --port 8000
+
+# Run Celery worker
+./venv/bin/celery -A worker.celery worker --loglevel=info
+
+# Run Frontend Vite development server (hot reloading)
+npm run dev --prefix frontend
+
+
+--------------------------------------------------------------------------------
+5. WEB UI & AUDIT LOGS
+--------------------------------------------------------------------------------
+
+# Open Web UI directly in browser:
+http://localhost:8000
+
+# View AI Audit Logs via Docker:
+docker exec -it rag-postgres-1 psql -U postgres -d rag -c "SELECT * FROM ai_audit_log ORDER BY created_at DESC;"
+
+# View AI Audit Logs via Python:
+./venv/bin/python3 -c "from db import get_recent_audit_logs; print(get_recent_audit_logs(limit=10))"
+
+
+--------------------------------------------------------------------------------
+6. API TESTING (CURL)
+--------------------------------------------------------------------------------
+
+# Upload and index a PDF file
+curl -X POST "http://127.0.0.1:8000/upload" \
+  -F "file=@temp/My_Resume.pdf"
+
+# Query the RAG system
+curl -G "http://127.0.0.1:8000/query" \
+  --data-urlencode "q=What skills does Shardul have?"
+================================================================================
+

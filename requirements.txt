@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+celery
+redis
+psycopg2-binary
+sqlalchemy
+pgvector
+openai
+liteLLM
+pydantic
+python-multipart
+pypdf
+numpy
+google-genai
+sentence-transformers
+aiofiles
