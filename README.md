@@ -1,90 +1,75 @@
-# ⚡ Nexus RAG: Production-Ready Hybrid RAG Engine
+# Nexus RAG: Two-Stage Hybrid Retrieval Engine
 
-<div align="center">
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React 19](https://img.shields.io/badge/React_19-20232A?style=flat&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16_pgvector-316192?style=flat&logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
+[![Redis](https://img.shields.io/badge/Redis_7-DC382D?style=flat&logo=redis&logoColor=white)](https://redis.io)
+[![Celery](https://img.shields.io/badge/Celery-37814A?style=flat&logo=celery&logoColor=white)](https://docs.celeryq.dev)
+[![Gemini](https://img.shields.io/badge/Google_Gemini_2.5_Flash-8E75B2?style=flat&logo=google&logoColor=white)](https://ai.google.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](LICENSE)
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16_pgvector-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
-[![Redis](https://img.shields.io/badge/Redis_7-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
-[![Celery](https://img.shields.io/badge/Celery-37814A?style=for-the-badge&logo=celery&logoColor=white)](https://docs.celeryq.dev)
-[![Gemini](https://img.shields.io/badge/Google_Gemini_2.5_Flash-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-
-<p align="center">
-  <strong>An enterprise-grade, high-performance Retrieval-Augmented Generation (RAG) platform featuring asynchronous distributed ingestion, two-stage vector retrieval with neural cross-encoder reranking, Redis cosine semantic caching, token audit logging, and a sleek React 19 operational cockpit.</strong>
-</p>
-
-[Key Features](#-key-features) • [System Architecture](#-system-architecture) • [Two-Stage Retrieval](#-two-stage-retrieval-pipeline) • [Tech Stack](#-tech-stack) • [Quick Start](#-quick-start) • [API Reference](#-api-reference) • [Production Roadmap](#-production-hardening-roadmap)
-
-</div>
+A modular Retrieval-Augmented Generation (RAG) service designed for low-latency question answering, structured citation tracking, and operational observability. Built with FastAPI, PostgreSQL/pgvector, Redis semantic caching, Celery asynchronous ingestion, cross-encoder neural reranking, and a React 19 administrative interface.
 
 ---
 
-## 🌟 Key Features
+## Table of Contents
 
-- **⚡ Sub-Second Redis Semantic Caching**:
-  - Computes cosine similarity across query vector embeddings in Redis (`CACHE_THRESHOLD = 0.90`, 1-hour TTL).
-  - Repeated or semantically identical questions hit cache in **under 20ms**, cutting LLM inference costs and rate-limit consumption to zero.
-- **🧠 Two-Stage Precision Retrieval & Reranking**:
-  - **Stage 1 (Bi-Encoder ANN)**: Fast candidate retrieval using `pgvector` Cosine Distance (`<=>`) over high-dimensional **3072-dim** embeddings with pre-filtering (`similarity >= 0.50`).
-  - **Stage 2 (Cross-Encoder Reranker)**: Deep semantic re-scoring using `BAAI/bge-reranker-base` (PyTorch with FP16 GPU/CPU acceleration) to eliminate false positives and position the most critical passages at top-$K$.
-- **📄 Asynchronous Distributed Ingestion Pipeline**:
-  - Document uploads return instantly via non-blocking **Celery** background tasks backed by **Redis**.
-  - Handles PDF parsing (`pypdf`), text sanitization, sliding-window chunking (150 words with 50-word overlap), and batch vectorization using Google's `gemini-embedding-2`.
-- **🎯 Grounded Answer Generation & Citation Enforcement**:
-  - Leverages **Gemini 2.5 Flash** via LiteLLM with strict **Pydantic schema validation** (`RAGResponse`).
-  - Zero-hallucination system prompt restricts answers exclusively to supplied contexts and links every claim directly to indexed source chunk IDs.
-- **📊 Observability & Cost Auditing**:
-  - Every non-cached LLM invocation automatically logs query text, model, input/output tokens, candidate chunks count, and dollar cost into an immutable `ai_audit_log` PostgreSQL table.
-- **💻 Modern React 19 + Tailwind CSS 4 UI**:
-  - Single-Page Application (SPA) with a sleek dark aesthetic, real-time cluster health indicators (PostgreSQL and Redis live status), interactive citation inspection drawer, document deletion/flush controls, and query telemetry.
-- **🏢 Multi-Tenant Architecture**:
-  - Database schema and retrieval filters are architected natively around tenant isolation (`tenant` keys).
+- [Core Architecture](#core-architecture)
+- [Key Features](#key-features)
+- [System Workflow](#system-workflow)
+- [Technology Stack](#technology-stack)
+- [Project Layout](#project-layout)
+- [Quick Start](#quick-start)
+- [Evaluation & Testing](#evaluation--testing)
+- [API Reference](#api-reference)
+- [Operational Commands](#operational-commands)
+- [Production Roadmap](#production-roadmap)
+- [License](#license)
 
 ---
 
-## 🏗️ System Architecture
+## Core Architecture
 
 ```mermaid
 flowchart TB
-    subgraph ClientLayer["🖥️ Frontend Client (React 19 + Tailwind CSS 4)"]
-        UI["Nexus Dashboard UI"]
-        QW["Query Workspace & Citation Viewer"]
-        KB["Knowledge Base Manager"]
-        AL["Audit Log & Cost Modal"]
+    subgraph ClientLayer["Frontend Client (React 19 + Tailwind CSS)"]
+        UI["Dashboard Interface"]
+        QW["Query Workspace & Citation Drawer"]
+        KB["Document Manager"]
+        AL["Audit Log & Cost Telemetry"]
     end
 
-    subgraph APILayer["⚡ API Gateway (FastAPI + Uvicorn)"]
-        Router["FastAPI Application (main.py)"]
+    subgraph APILayer["API Gateway (FastAPI + Uvicorn)"]
+        Router["Application Router (main.py)"]
         UploadEP["POST /upload"]
         QueryEP["GET /query"]
         StatsEP["GET /api/stats & /documents"]
         AuditEP["GET /api/audit-logs"]
     end
 
-    subgraph CacheLayer["⚡ Semantic Cache & Broker (Redis 7)"]
+    subgraph CacheLayer["Semantic Cache & Broker (Redis 7)"]
         SemCache[("Semantic Cache\n(Cosine Similarity >= 0.90)")]
         TaskQueue[("Celery Task Queue\n(broker: redis://:6379/0)")]
     end
 
-    subgraph IngestionLayer["⚙️ Asynchronous Workers (Celery)"]
-        Worker["Celery Worker (worker.py)"]
-        Parser["PyPDF Text Extractor & Cleaner"]
+    subgraph IngestionLayer["Ingestion Pipeline (Celery)"]
+        Worker["Worker Process (worker.py)"]
+        Parser["PDF Text Extractor & Normalizer"]
         Chunker["Sliding Window Chunker (150w / 50o)"]
     end
 
-    subgraph RetrievalLayer["🧠 Neural Two-Stage Retrieval"]
-        PgVectorSearch["Stage 1: pgvector ANN Search (top 20)"]
-        RerankerModule["Stage 2: BAAI/bge-reranker-base (top 5)"]
+    subgraph RetrievalLayer["Two-Stage Retrieval Pipeline"]
+        PgVectorSearch["Stage 1: pgvector Cosine Search (Top 20)"]
+        RerankerModule["Stage 2: BAAI/bge-reranker-base (Top 5)"]
     end
 
-    subgraph StorageLayer["🗄️ Database (PostgreSQL 16 + pgvector)"]
+    subgraph StorageLayer["Data Tier (PostgreSQL 16 + pgvector)"]
         ChunksTable[("chunks Table\n• vector(3072)\n• tenant, source, title\n• doc_type, doc_date")]
         AuditTable[("ai_audit_log Table\n• tokens, cost\n• query, model, chunks")]
     end
 
-    subgraph ExternalModels["🌐 Foundation Models"]
+    subgraph ExternalModels["External Inference Services"]
         GeminiEmbed["Google Gemini Embedding 2\n(3072-dim vectors)"]
         GeminiLLM["Google Gemini 2.5 Flash\n(Structured JSON via LiteLLM)"]
     end
@@ -97,247 +82,294 @@ flowchart TB
     AL --> AuditEP
 
     %% Ingestion Flow
-    UploadEP -.->|"Dispatch Task"| TaskQueue
+    UploadEP -.->|"Enqueue Task"| TaskQueue
     TaskQueue --> Worker
     Worker --> Parser --> Chunker
     Chunker -->|"Embed Chunks"| GeminiEmbed
-    GeminiEmbed -->|"Vectors"| Worker
+    GeminiEmbed -->|"Embedding Vectors"| Worker
     Worker -->|"Batch Insert"| ChunksTable
 
-    %% Query & Retrieval Flow
+    %% Query Flow
     QueryEP -->|"1. Embed Query"| GeminiEmbed
-    QueryEP -->|"2. Check Semantic Cache"| SemCache
-    SemCache -.->|"Cache Hit (<20ms)"| QueryEP
+    QueryEP -->|"2. Semantic Cache Lookup"| SemCache
+    SemCache -.->|"Cache Hit (~2ms)"| QueryEP
     SemCache -->|"Cache Miss"| PgVectorSearch
-    PgVectorSearch -->|"Query Vectors"| ChunksTable
-    PgVectorSearch -->|"Top 20 Chunks"| RerankerModule
-    RerankerModule -->|"Top 5 Re-ordered Chunks"| GeminiLLM
-    GeminiLLM -->|"Answer + Citations"| QueryEP
+    PgVectorSearch -->|"ANN Search"| ChunksTable
+    PgVectorSearch -->|"Top 20 Candidates"| RerankerModule
+    RerankerModule -->|"Top 5 Reranked Candidates"| GeminiLLM
+    GeminiLLM -->|"Structured Answer + Citations"| QueryEP
     QueryEP -->|"Store Response"| SemCache
-    QueryEP -->|"Log Token Usage & Cost"| AuditTable
+    QueryEP -->|"Record Telemetry"| AuditTable
 ```
 
 ---
 
-## 🔄 Two-Stage Retrieval & Semantic Cache Flow
+## Key Features
+
+- **Two-Stage Vector Retrieval & Reranking**:
+  - **Stage 1 (Bi-Encoder ANN)**: Candidate retrieval using PostgreSQL `pgvector` with Cosine Distance (`<=>`) over 3072-dimensional embeddings, filtered at `similarity >= 0.50`.
+  - **Stage 2 (Cross-Encoder Reranker)**: Deep joint token attention using `BAAI/bge-reranker-base` to eliminate false positives and promote the most contextually relevant passages to top-$K$. Includes automatic GPU VRAM detection and CPU fallback.
+- **Sub-10ms Redis Semantic Caching**:
+  - Compares query embedding vectors against cached query keys in Redis using cosine similarity (`CACHE_THRESHOLD = 0.90`, 1-hour TTL).
+  - Semantically identical or repeated queries return in approximately 2ms without invoking external LLM APIs.
+- **Asynchronous Document Ingestion**:
+  - Document uploads offload parsing, sanitization, sliding-window chunking (150 words with 50-word overlap), and embedding generation to Celery background workers.
+- **Schema-Enforced Grounded Answers & Citations**:
+  - LLM completion uses Gemini 2.5 Flash via LiteLLM with strict Pydantic JSON validation (`RAGResponse`).
+  - Output is constrained to provided passages, and each claim must reference the 1-based index of the supporting chunk.
+- **Observability and Cost Tracking**:
+  - Non-cached queries log input tokens, output tokens, candidate counts, latency, and estimated cost into a persistent `ai_audit_log` PostgreSQL table.
+- **Single-Page Administrative Dashboard**:
+  - Pre-built React 19 interface with real-time cluster health monitors, interactive citation inspection, knowledge base controls, and token usage history.
+- **Multi-Tenant Scoping**:
+  - Database schema and retrieval filters enforce tenant separation at the query layer.
+
+---
+
+## System Workflow
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as User / Client
+    actor Client as User / Client
     participant API as FastAPI (main.py)
     participant Cache as Redis Semantic Cache
     participant Embed as Gemini Embedding 2
-    participant PG as PostgreSQL (pgvector)
+    participant DB as PostgreSQL (pgvector)
     participant Rerank as BGE Cross-Encoder
     participant LLM as Gemini 2.5 Flash
     participant Audit as ai_audit_log
 
-    User->>API: GET /query?q="Explain experience with Docker"
-    API->>Embed: Embed query text
-    Embed-->>API: 3072-dim vector
+    Client->>API: GET /query?q="Explain experience with Docker"
+    API->>Embed: Embed query string
+    Embed-->>API: 3072-dimensional vector
 
-    API->>Cache: Cosine scan against existing keys
+    API->>Cache: Cosine scan against cached keys
     alt Cache Hit (similarity >= 0.90)
-        Cache-->>API: Cached answer & citations (< 20ms)
-        API-->>User: Return response (source: "semantic_cache")
+        Cache-->>API: Cached answer & citations (~2ms)
+        API-->>Client: Return response (source: "semantic_cache")
     else Cache Miss
-        API->>PG: Search chunks (tenant, embedding <=> vector, limit=20)
-        PG-->>API: 20 candidate chunks with cosine distances
-        Note over API: Filter chunks where score >= 0.50
+        API->>DB: Search chunks (tenant, embedding <=> vector, limit=20)
+        DB-->>API: 20 candidate chunks with similarity scores
+        Note over API: Filter candidates where score >= 0.50
         API->>Rerank: Cross-encode (query, chunk_content) pairs
-        Note over Rerank: Neural cross-attention re-scoring
-        Rerank-->>API: Top 5 most relevant chunks
-        API->>LLM: Generate grounded answer (Strict Pydantic RAGResponse)
-        LLM-->>API: JSON: { answer, citations: [1, 3] } + token usage
-        par Async Store & Audit
-            API->>Cache: Set key with 3600s TTL
+        Rerank-->>API: Reordered top-5 candidates
+        API->>LLM: Generate grounded answer (Pydantic RAGResponse schema)
+        LLM-->>API: JSON: { answer, citations: [1, 2] } + token usage
+        par Background Store & Audit
+            API->>Cache: Store response with 3600s TTL
             API->>Audit: Record tokens, latency, cost, and metadata
         end
-        API-->>User: Return response (source: "llm", latency_ms, citations)
+        API-->>Client: Return response (source: "llm", latency_ms, citations)
     end
 ```
 
 ---
 
-## 🛠️ Tech Stack & Model Specifications
+## Technology Stack
 
-| Component | Technology | Specification / Version | Purpose |
+| Layer | Component | Specification | Description |
 | :--- | :--- | :--- | :--- |
-| **Generative LLM** | Google Gemini | `gemini-2.5-flash` via LiteLLM | Fast, cost-efficient, citation-grounded reasoning |
-| **Embedding Model** | Google Gemini | `gemini-embedding-2` (3072 dims) | High-resolution semantic vector representation |
-| **Neural Reranker** | Hugging Face / BAAI | `BAAI/bge-reranker-base` | Cross-encoder contextual reranking (FP16 GPU/CPU) |
-| **Vector Store** | PostgreSQL 16 | `pgvector/pgvector:pg16` | ACID-compliant relational + vector similarity indexing |
-| **Semantic Cache** | Redis | `redis:7` | Sub-20ms query caching with cosine similarity thresholding |
-| **Task Queue** | Celery + Redis | Celery 5.x | Asynchronous, non-blocking document ingestion worker |
-| **Backend Framework**| FastAPI | Python 3.11+, Uvicorn, Pydantic v2 | High-concurrency RESTful API endpoints |
-| **Frontend Framework**| React 19 | Vite 8, Tailwind CSS v4, Lucide Icons | Responsive glassmorphism dashboard & telemetry |
+| **Generation** | Gemini 2.5 Flash | `gemini/gemini-2.5-flash` via LiteLLM | Structured Pydantic generation with citation enforcement |
+| **Embeddings** | Gemini Embedding 2 | `gemini-embedding-2` | 3072-dimensional vector representation |
+| **Reranking** | Cross-Encoder | `BAAI/bge-reranker-base` | Neural pair scoring with automatic GPU/CPU fallback |
+| **Database** | PostgreSQL 16 | `pgvector/pgvector:pg16` | Relational metadata storage and HNSW vector index |
+| **Cache & Queue** | Redis 7 | `redis:7` | Semantic vector caching and Celery message broker |
+| **Worker Engine** | Celery | Celery 5.x | Background asynchronous PDF extraction and chunking |
+| **Backend API** | FastAPI | Python 3.11+, Pydantic v2 | High-throughput async REST endpoints |
+| **Frontend UI** | React 19 | Vite, Tailwind CSS v4, Lucide | Operational dashboard and telemetry inspection |
 
 ---
 
-## 📂 Project Structure
+## Project Layout
 
-```
-├── docker-compose.yml       # Infrastructure orchestration (Postgres pgvector:16 & Redis:7)
-├── requirements.txt         # Python backend dependencies
-├── .env.example             # Template for API keys and database configuration
-├── main.py                  # FastAPI application entrypoint, REST routing & static mount
-├── rag.py                   # Embedding generation, text chunking, and LiteLLM prompt engine
-├── reranker.py              # BAAI/bge-reranker-base cross-encoder neural reranking
-├── db.py                    # PostgreSQL schema definition, pgvector queries & audit logs
-├── cache.py                 # Redis semantic caching logic (cosine similarity & TTL)
-├── worker.py                # Celery asynchronous background tasks for PDF document indexing
-├── models.py                # Pydantic schemas (Citations, RAGResponse)
-├── useful_commands.txt      # Curated CLI snippets for DB operations, cache flushes & testing
-├── temp/                    # Working directory for uploaded documents (.gitkeep preserved)
-└── frontend/                # Production Single Page Application (SPA)
-    ├── package.json         # React 19 & Tailwind CSS 4 build configuration
-    ├── vite.config.js       # Vite build & frontend bundling configuration
-    ├── index.html           # HTML entrypoint
-    ├── dist/                # Pre-built static SPA assets (served by FastAPI at root)
-    └── src/
-        ├── App.jsx          # Root SPA component with telemetry loop & modal triggers
-        ├── main.jsx         # React DOM mount point
-        └── components/
-            ├── Header.jsx           # Cluster status badges, stats refresher & navigation
-            ├── QueryWorkspace.jsx   # Search bar, LLM citation cards, latency & token stats
-            ├── KnowledgeBase.jsx    # PDF dropzone, chunk counts, document delete & flushes
-            └── AuditLogModal.jsx    # Real-time token usage, cost calculator & query history
+```text
+├── docker-compose.yml          # Container configuration for PostgreSQL (pgvector) and Redis
+├── requirements.txt            # Python dependencies
+├── .env.example                # Configuration template for API keys and connection URLs
+├── main.py                     # FastAPI application entrypoint and route handlers
+├── rag.py                      # Embedding logic, text chunking, and LLM prompt assembly
+├── reranker.py                 # Cross-encoder reranker with VRAM probe and CPU fallback
+├── db.py                       # PostgreSQL schema definitions, vector search, and audit logs
+├── cache.py                    # Redis semantic cache implementation with cosine similarity
+├── worker.py                   # Celery background tasks for document parsing and indexing
+├── models.py                   # Pydantic models (Citations, RAGResponse)
+├── validate_dataset.py         # Phase 5A: Evaluation dataset and database schema validator
+├── evaluate_retrieval.py       # Phase 5B: pgvector Recall@K, MRR, and MAP evaluator
+├── evaluate_reranker.py        # Phase 5C: Cross-encoder ranking improvement evaluator
+├── evaluate_answers.py         # Phase 5D: Citation provenance and answer overlap evaluator
+├── evaluate_performance.py     # Phase 5E: Component latency telemetry and cache hit testing
+├── run_evaluation.py           # Master runner compiling evaluation_results/summary.md
+├── eval.json                   # Ground-truth evaluation dataset
+├── tests/                      # Automated unit and regression test suite
+│   ├── test_evaluation_metrics.py  # Deterministic metric unit tests (Recall, MRR, MAP, F1)
+│   └── test_rag_regression.py      # Pipeline regression tests (chunking, isolation, audit)
+├── evaluation_results/         # Generated evaluation reports and JSON benchmark data
+│   ├── summary.md              # Markdown evaluation report
+│   ├── retrieval_results.json  # Raw and filtered retrieval metrics
+│   ├── reranker_results.json   # Comparative reranker performance
+│   ├── answer_results.json     # Grounded answer and citation validity metrics
+│   └── performance_results.json# Component latency percentiles and cache metrics
+├── frontend/                   # React 19 administrative SPA
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── dist/                   # Static compiled assets served by FastAPI
+│   └── src/
+│       ├── App.jsx
+│       └── components/
+└── temp/                       # Working directory for document uploads
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Prerequisites
-- [Docker](https://docs.docker.com/get-docker/) & [Docker Compose](https://docs.docker.com/compose/)
-- [Python 3.10+](https://www.python.org/)
-- [Node.js 18+](https://nodejs.org/) (for frontend customization or building)
-- A [Google Gemini API Key](https://aistudio.google.com/app/apikey)
 
----
+- Docker and Docker Compose
+- Python 3.10 or higher
+- Node.js 18 or higher (optional, only required to modify or rebuild the frontend)
+- Google Gemini API key
 
-### 2. Clone & Environment Configuration
+### 2. Environment Configuration
 
 ```bash
 git clone https://github.com/your-username/nexus-rag.git
 cd nexus-rag
 
-# Create your .env file
 cp .env.example .env
 ```
 
-Edit `.env` and supply your Gemini API key:
+Set your Gemini API key in `.env`:
+
 ```ini
-GEMINI_API_KEY=AIzaSy...your_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
----
-
-### 3. Launch Infrastructure (Docker)
-
-Spin up PostgreSQL (with pgvector extension) and Redis:
+### 3. Start Database and Cache Containers
 
 ```bash
 docker compose up -d
-```
-
-Verify that both containers are running healthy:
-```bash
 docker compose ps
 ```
-> PostgreSQL is exposed on `localhost:5432` and Redis on `localhost:6379`.
 
----
+PostgreSQL is available on port `5432` and Redis on port `6379`.
 
-### 4. Setup Python Virtual Environment
+### 4. Set Up Python Environment
 
 ```bash
-# Create and activate virtual environment
 python3 -m venv venv
 source venv/bin/activate
-
-# Install backend dependencies
-pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
----
+### 5. Start the Background Ingestion Worker
 
-### 5. Launch the Celery Ingestion Worker
-
-In a dedicated terminal tab with your virtual environment active:
+In a dedicated terminal:
 
 ```bash
 source venv/bin/activate
 celery -A worker.celery worker --loglevel=info
 ```
 
----
+### 6. Start the API Server
 
-### 6. Launch the FastAPI Server
-
-In another terminal tab:
+In another terminal:
 
 ```bash
 source venv/bin/activate
 uvicorn main:app --reload --port 8000
 ```
 
----
-
-### 7. Access the Application
-
-- **Web Dashboard**: Navigate to [http://localhost:8000](http://localhost:8000)
-- **Interactive Swagger API Docs**: Navigate to [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Alternative ReDoc**: Navigate to [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
-*(Optional) If you want to develop or modify the frontend with instant hot-reloading:*
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-*(To re-compile the frontend production bundle):*
-```bash
-cd frontend
-npm run build
-```
+- Administrative Dashboard: [http://localhost:8000](http://localhost:8000)
+- OpenAPI Documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
+- ReDoc Documentation: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ---
 
-## 📡 API Reference
+## Evaluation & Testing
 
-### 1. Ingest Document
-Uploads a PDF document and queues background extraction, chunking, and embedding.
-- **Endpoint**: `POST /upload`
-- **Payload**: `multipart/form-data` with `file=@document.pdf`
+The project includes an end-to-end evaluation suite that verifies data integrity, vector retrieval, cross-encoder reranking, answer quality, citation validity, component latency, and regression safety.
+
+### Running Automated Unit & Regression Tests
+
+```bash
+source venv/bin/activate
+export HF_HUB_OFFLINE=1
+
+python -m unittest discover tests
+```
+
+### Running Individual Evaluation Stages
+
+```bash
+# Phase 5A: Validate evaluation dataset against PostgreSQL chunks
+python validate_dataset.py
+
+# Phase 5B: Evaluate vector retrieval (Recall@5, Recall@10, Recall@20, MRR, MAP)
+python evaluate_retrieval.py
+
+# Phase 5C: Evaluate cross-encoder reranker impact on identical candidates
+python evaluate_reranker.py
+
+# Phase 5D: Evaluate live generation, citation validity, and token overlap
+python evaluate_answers.py
+
+# Phase 5E: Measure component-level latency and semantic cache behavior
+python evaluate_performance.py
+
+# Orchestrate all phases and compile evaluation_results/summary.md
+python run_evaluation.py
+```
+
+### Measured Evaluation Highlights
+
+- **Reranker MAP Gain**: Neural reranking improved Mean Average Precision from **0.8639 to 0.9867 (+14.2% relative gain)**, successfully elevating relevant project passages over generic headers.
+- **Citation Provenance**: **100% (10/10)** of generated responses included valid citations referencing existing database chunks with matching source metadata.
+- **Semantic Cache Efficiency**: Average cache hit latency was **2.54 ms**, representing a **~1260x reduction** in query latency compared to uncached execution (~3.2 seconds).
+
+Full reports and metrics are stored in [`evaluation_results/summary.md`](./evaluation_results/summary.md).
+
+---
+
+## API Reference
+
+### Ingest Document
+
+Uploads a PDF document and queues it for asynchronous parsing, chunking, and embedding.
+
+- **URL**: `POST /upload`
+- **Content-Type**: `multipart/form-data`
+- **Body**: `file=@document.pdf`
 - **Response**:
+
 ```json
 {
   "status": "indexing",
-  "filename": "My_Resume.pdf",
-  "path": "temp/My_Resume.pdf"
+  "filename": "document.pdf",
+  "path": "temp/document.pdf"
 }
 ```
 
-### 2. Execute RAG Query
-Queries the system using two-stage retrieval with semantic cache bypass.
-- **Endpoint**: `GET /query?q={query_string}`
-- **Response (Cache Miss - LLM Generation)**:
+### Execute RAG Query
+
+Processes a user query through the two-stage retrieval and generation pipeline.
+
+- **URL**: `GET /query?q={query_text}`
+- **Response (Uncached - Generated by LLM)**:
+
 ```json
 {
   "source": "llm",
   "latency_ms": 1420,
-  "answer": "Shardul has extensive experience in distributed systems, PyTorch, and vector databases.",
+  "answer": "The system utilizes FastAPI, Celery, Redis, PostgreSQL, pgvector, and Gemini.",
   "citations": [
     {
       "chunk": 1,
-      "source": "temp/My_Resume.pdf",
-      "title": "temp/My_Resume.pdf",
-      "content": "Engineered multi-tenant RAG systems using pgvector and Celery...",
-      "score": 0.8924
+      "source": "temp/document.pdf",
+      "title": "temp/document.pdf",
+      "content": "Built an async ticket pipeline (FastAPI + Celery + Redis)...",
+      "score": 0.9982
     }
   ],
   "tokens": {
@@ -348,29 +380,35 @@ Queries the system using two-stage retrieval with semantic cache bypass.
   "candidate_chunks_count": 5
 }
 ```
-- **Response (Cache Hit - Instant Retrieval)**:
+
+- **Response (Cached - Retrieved from Redis)**:
+
 ```json
 {
   "source": "semantic_cache",
-  "latency_ms": 18,
-  "answer": "Shardul has extensive experience in distributed systems, PyTorch, and vector databases.",
+  "latency_ms": 2,
+  "answer": "The system utilizes FastAPI, Celery, Redis, PostgreSQL, pgvector, and Gemini.",
   "citations": [...]
 }
 ```
 
-### 3. Cluster Telemetry
-- **Endpoint**: `GET /api/stats`
+### Cluster Telemetry
+
+Returns database connectivity and chunk statistics.
+
+- **URL**: `GET /api/stats`
 - **Response**:
+
 ```json
 {
   "postgres": {
     "status": "online",
-    "chunks_count": 48,
-    "documents_count": 3
+    "chunks_count": 5,
+    "documents_count": 1
   },
   "redis": {
     "status": "online",
-    "cached_entries": 4
+    "cached_entries": 3
   },
   "models": {
     "llm": "gemini-2.5-flash",
@@ -380,71 +418,44 @@ Queries the system using two-stage retrieval with semantic cache bypass.
 }
 ```
 
-### 4. Knowledge Base Operations
-- `GET /api/documents`: List indexed documents and chunk statistics.
-- `POST /api/flush-chunks`: Delete chunks for a specific document or flush all vectors.
-  ```json
-  // Delete single document
-  { "source": "temp/My_Resume.pdf" }
-  // Truncate all chunks
-  {}
-  ```
-- `POST /api/flush-cache`: Evict all cached queries from Redis without disrupting Celery queues.
-- `GET /api/audit-logs?limit=15`: Retrieve recent audit records including token usage and costs.
+### Document Management
+
+- `GET /api/documents`: List indexed documents and per-document chunk counts.
+- `POST /api/flush-chunks`: Remove chunks for a specific document, or flush all chunks when no body is provided.
+- `POST /api/flush-cache`: Evict semantic cache keys from Redis without affecting Celery queues.
+- `GET /api/audit-logs?limit=15`: Return recent audit records including tokens, latency, and cost.
 
 ---
 
-## 🧪 Testing with cURL
+## Operational Commands
 
-Upload a document:
+Inspect chunk count:
 ```bash
-curl -X POST "http://127.0.0.1:8000/upload" \
-  -F "file=@/path/to/your/document.pdf"
-```
-
-Submit a query:
-```bash
-curl -G "http://127.0.0.1:8000/query" \
-  --data-urlencode "q=What are the primary qualifications listed?"
-```
-
-Check audit log:
-```bash
-curl "http://127.0.0.1:8000/api/audit-logs?limit=5"
-```
-
----
-
-## 🛠️ Helpful Operational Commands
-
-Refer to [`useful_commands.txt`](./useful_commands.txt) for a complete list of debugging and administration snippets:
-
-```bash
-# Inspect total chunk count in PostgreSQL
 docker exec -it rag-postgres-1 psql -U postgres -d rag -c "SELECT count(*) FROM chunks;"
+```
 
-# Inspect audit log entries
+Inspect audit records:
+```bash
 docker exec -it rag-postgres-1 psql -U postgres -d rag -c "SELECT id, query, input_tokens, output_tokens, cost, created_at FROM ai_audit_log ORDER BY created_at DESC LIMIT 5;"
+```
 
-# Flush semantic cache from Redis CLI
-docker exec -it rag-redis-1 redis-cli --scan --pattern "semantic_cache:*" | xargs -r docker exec -i rag-redis-1 redis-cli del
+List cached query keys:
+```bash
+docker exec -it rag-redis-1 redis-cli --scan --pattern "semantic_cache:*"
 ```
 
 ---
 
-## 🔮 Production Hardening Roadmap
+## Production Roadmap
 
-While Nexus RAG contains a complete core engine, the following enhancements are planned for enterprise scale:
-
-- [ ] **Hybrid Search (BM25 + Dense Vectors)**: Integrate Reciprocal Rank Fusion (RRF) combining PostgreSQL `pg_trgm` / full-text search with pgvector embeddings for enhanced keyword and code recall.
-- [ ] **Streaming Responses (SSE)**: Implement Server-Sent Events (`StreamingResponse`) for token-by-token streaming in the UI with citation placeholders.
-- [ ] **Auth & RBAC**: Add JWT / OAuth2 authentication with role-based document access control and tenant key scoping.
-- [ ] **Multi-Format Ingestion**: Expand Celery ingestion pipeline to support `.docx`, `.pptx`, Markdown, HTML, and audio/video transcription.
-- [ ] **Automated Evaluation Suite**: Integrate continuous automated RAG evaluation using [Ragas](https://github.com/explodinggradients/ragas) or TruLens (Faithfulness, Answer Relevance, Context Recall).
-- [ ] **Distributed Tracing & Metrics**: Export OpenTelemetry traces and Prometheus metrics for vector search latency percentiles (p95, p99).
+- [ ] **Hybrid Search (BM25 + Dense Vectors)**: Integrate PostgreSQL full-text search with pgvector embeddings using Reciprocal Rank Fusion (RRF) for enhanced keyword matching.
+- [ ] **Streaming Responses (SSE)**: Add Server-Sent Events to stream tokens to the UI with citation placeholders.
+- [ ] **Role-Based Access Control**: Add JWT authentication with role-based document access controls and tenant key scoping.
+- [ ] **Multi-Format Ingestion**: Expand Celery ingestion to support DOCX, Markdown, HTML, and audio/video transcription.
+- [ ] **Distributed Tracing & Metrics**: Export OpenTelemetry traces and Prometheus metrics for p95 and p99 vector search latencies.
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the [MIT License](LICENSE). Contributions, issues, and feature suggestions are welcome!
+This project is licensed under the [MIT License](LICENSE).
