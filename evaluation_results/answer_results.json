@@ -1,0 +1,522 @@
+{
+  "tenant": "default",
+  "total_questions": 10,
+  "citation_metrics": {
+    "questions_with_citations": 10,
+    "questions_with_valid_citations": 10,
+    "citation_validity_rate": 1.0
+  },
+  "lexical_metrics_summary": {
+    "exact_match_rate": 0.3,
+    "mean_token_f1": 0.89497,
+    "mean_jaccard_similarity": 0.8253600000000001,
+    "limitations_note": "Lexical metrics (Exact Match, Token F1, Jaccard) reflect surface text overlap, not semantic or factual correctness. A generated answer can be 100% factually accurate while using different syntactic wording than the reference answer."
+  },
+  "llm_judge_enabled": false,
+  "details": [
+    {
+      "query_index": 1,
+      "question": "What is Shardul Hingane's CGPA in B.Tech?",
+      "expected_answer": "Shardul Hingane's CGPA in B.Tech is 8.5/10.",
+      "generated_answer": "Shardul Hingane's CGPA in B.Tech is 8.5/10.",
+      "raw_citations": [
+        1
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        5,
+        4,
+        3
+      ],
+      "reranked_chunk_ids": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "jaccard": 1.0
+      },
+      "error": null
+    },
+    {
+      "query_index": 2,
+      "question": "Which institute is Shardul Hingane pursuing his B.Tech from?",
+      "expected_answer": "Shardul Hingane is pursuing his B.Tech in Information Technology from Shri Guru Gobind Singhji Institute of Engineering and Technology in Nanded, Maharashtra.",
+      "generated_answer": "Shardul Hingane is pursuing his B.Tech in Information Technology from Shri Guru Gobind Singhji Institute of Engineering and Technology.",
+      "raw_citations": [
+        1
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "reranked_chunk_ids": [
+        1,
+        2,
+        5,
+        4,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1": 0.9474,
+        "jaccard": 0.9
+      },
+      "error": null
+    },
+    {
+      "query_index": 3,
+      "question": "How many Data Structures and Algorithms problems has Shardul solved?",
+      "expected_answer": "Shardul Hingane has solved over 400 Data Structures and Algorithms problems on platforms like LeetCode and GeeksforGeeks.",
+      "generated_answer": "Shardul has solved over 400 Data Structures and Algorithms problems on platforms like LeetCode and GeeksforGeeks.",
+      "raw_citations": [
+        1
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "reranked_chunk_ids": [
+        1,
+        4,
+        5,
+        2,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.9375,
+        "f1": 0.9677,
+        "jaccard": 0.9375
+      },
+      "error": null
+    },
+    {
+      "query_index": 4,
+      "question": "What technologies are used in the AI Support Copilot project?",
+      "expected_answer": "The AI Support Copilot project utilizes FastAPI, Celery, Redis, PostgreSQL, pgvector, and Gemini.",
+      "generated_answer": "The AI Support Copilot project utilizes FastAPI, Celery, Redis, PostgreSQL, pgvector, and Gemini.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 2,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "reranked_chunk_ids": [
+        2,
+        1,
+        4,
+        5,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "jaccard": 1.0
+      },
+      "error": null
+    },
+    {
+      "query_index": 5,
+      "question": "What confidence threshold is used to gate auto-resolution in the AI Support Copilot?",
+      "expected_answer": "In the AI Support Copilot project, auto-resolution is gated on a 0.72 confidence threshold, with low-confidence verdicts being auto-downgraded for escalation.",
+      "generated_answer": "In the AI Support Copilot project, auto-resolution is gated on a 0.72 confidence threshold.",
+      "raw_citations": [
+        1
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 2,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "reranked_chunk_ids": [
+        2,
+        1,
+        5,
+        4,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.6667,
+        "f1": 0.8,
+        "jaccard": 0.6667
+      },
+      "error": null
+    },
+    {
+      "query_index": 6,
+      "question": "Which retrieval techniques are implemented in the AI Support Copilot?",
+      "expected_answer": "The AI Support Copilot implements hybrid retrieval using `pgvector` HNSW and `tsvector` keyword search, which are fused by reciprocal rank fusion and then reranked.",
+      "generated_answer": "In the AI Support Copilot project, hybrid retrieval is implemented using pgvector HNSW and tsvector keyword search. These techniques are fused by reciprocal rank fusion and then reranked into a schema-validated LLM response.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 2,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "reranked_chunk_ids": [
+        2,
+        1,
+        4,
+        5,
+        3
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 0.6562,
+        "recall": 0.913,
+        "f1": 0.7636,
+        "jaccard": 0.6176
+      },
+      "error": null
+    },
+    {
+      "query_index": 7,
+      "question": "How does the AI Support Copilot enforce tenant isolation?",
+      "expected_answer": "The AI Support Copilot enforces tenant isolation using PostgreSQL Row-Level Security and a least-privilege role. This design ensures that if a tenant filter is missing, it defaults to a closed state instead of potentially leaking data.",
+      "generated_answer": "The AI Support Copilot enforces tenant isolation using PostgreSQL Row-Level Security and a least-privilege role. This design ensures that if a tenant filter is missing, it fails closed, preventing data leakage.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 2,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 1,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "reranked_chunk_ids": [
+        2,
+        1,
+        4,
+        3,
+        5
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 0.8966,
+        "recall": 0.7879,
+        "f1": 0.8387,
+        "jaccard": 0.7222
+      },
+      "error": null
+    },
+    {
+      "query_index": 8,
+      "question": "What P99 latency and throughput were achieved by the URL Shortener API?",
+      "expected_answer": "The URL Shortener API achieved an 8ms P99 latency and a throughput of 1,200 requests per second on a single instance under k6 load testing.",
+      "generated_answer": "The URL Shortener API achieved an 8ms P99 latency and a throughput of 1,200 requests per second on a single instance under k6 load testing.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 3,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 2,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "reranked_chunk_ids": [
+        3,
+        2,
+        4,
+        5,
+        1
+      ],
+      "lexical_metrics": {
+        "exact_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "jaccard": 1.0
+      },
+      "error": null
+    },
+    {
+      "query_index": 9,
+      "question": "How many test cases were used to validate SSRF protection in the URL Shortener API?",
+      "expected_answer": "The URL Shortener API's SSRF protection was validated by 9 parametrized pytest cases.",
+      "generated_answer": "The URL Shortener API's protection against SSRF attacks was validated by 9 parametrized pytest cases.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 3,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 4,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "reranked_chunk_ids": [
+        3,
+        4,
+        2,
+        5,
+        1
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 0.8667,
+        "recall": 1.0,
+        "f1": 0.9286,
+        "jaccard": 0.8667
+      },
+      "error": null
+    },
+    {
+      "query_index": 10,
+      "question": "What latency reduction was achieved using Redis cache-aside in the URL Shortener project?",
+      "expected_answer": "In the URL Shortener project, using Redis cache-aside achieved a 6x latency reduction, decreasing it from 40ms for uncached Postgres lookups to 7ms for cached Redis reads.",
+      "generated_answer": "In the URL Shortener project, Redis cache-aside performance was benchmarked, showing a 6x latency reduction (from 40ms cache miss to 7ms cache hit) between uncached PostgreSQL lookups and cached Redis reads.",
+      "raw_citations": [
+        1,
+        2
+      ],
+      "citation_evaluation": {
+        "all_valid": true,
+        "issues": [],
+        "verified_citations": [
+          {
+            "citation_number": 1,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 3,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          },
+          {
+            "citation_number": 2,
+            "is_valid": true,
+            "issues": [],
+            "chunk_id": 4,
+            "chunk_source": "temp/My_Resume.pdf",
+            "chunk_title": "temp/My_Resume.pdf"
+          }
+        ]
+      },
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "reranked_chunk_ids": [
+        3,
+        4,
+        2,
+        1,
+        5
+      ],
+      "lexical_metrics": {
+        "exact_match": 0.0,
+        "precision": 0.6552,
+        "recall": 0.76,
+        "f1": 0.7037,
+        "jaccard": 0.5429
+      },
+      "error": null
+    }
+  ]
+}

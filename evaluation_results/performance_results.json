@@ -1,0 +1,77 @@
+{
+  "tenant": "default",
+  "sample_query": "What is Shardul Hingane's CGPA in B.Tech?",
+  "benchmarks": {
+    "query_embedding_gemini": {
+      "mean_ms": 812.03,
+      "median_ms": 724.57,
+      "p95_ms": 1207.7,
+      "min_ms": 654.04,
+      "max_ms": 1207.7,
+      "samples": 5,
+      "cold_start_ms": 891.73
+    },
+    "pgvector_retrieval": {
+      "mean_ms": 2.62,
+      "median_ms": 2.39,
+      "p95_ms": 4.01,
+      "min_ms": 1.9,
+      "max_ms": 4.01,
+      "samples": 10,
+      "cold_start_ms": 5.47
+    },
+    "cross_encoder_reranker": {
+      "mean_ms": 38.57,
+      "median_ms": 38.83,
+      "p95_ms": 39.08,
+      "min_ms": 37.17,
+      "max_ms": 39.08,
+      "samples": 5,
+      "cold_start_ms": 510.47
+    },
+    "llm_generation_gemini_flash": {
+      "mean_ms": 2352.82,
+      "median_ms": 2352.82,
+      "p95_ms": 2352.82,
+      "min_ms": 2352.82,
+      "max_ms": 2352.82,
+      "samples": 1
+    },
+    "semantic_cache": {
+      "miss_lookup_latency_ms": 32.72,
+      "hit_lookup_stats": {
+        "mean_ms": 2.54,
+        "median_ms": 2.18,
+        "p95_ms": 5.19,
+        "min_ms": 1.11,
+        "max_ms": 5.19,
+        "samples": 5
+      },
+      "threshold_tested": 0.9,
+      "controlled_sequence": [
+        {
+          "query_type": "exact_match",
+          "expected_hit": true,
+          "actual_hit": true
+        },
+        {
+          "query_type": "high_similarity_paraphrase",
+          "expected_hit": true,
+          "actual_hit": true
+        },
+        {
+          "query_type": "unrelated_query",
+          "expected_hit": false,
+          "actual_hit": false
+        }
+      ],
+      "sequence_hit_rate": 0.6666666666666666,
+      "sequence_accuracy": 1.0
+    }
+  },
+  "end_to_end_summary": {
+    "estimated_uncached_warmed_mean_ms": 3206.04,
+    "cached_lookup_warmed_mean_ms": 2.54,
+    "speedup_factor_from_cache": 1262.2
+  }
+}

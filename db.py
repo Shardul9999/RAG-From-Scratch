@@ -71,6 +71,7 @@ def search_chunks(
     query = """
         SELECT
             content,
+            id,
             source,
             title,
             doc_type,

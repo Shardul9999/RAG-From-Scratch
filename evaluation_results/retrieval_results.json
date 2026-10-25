@@ -1,0 +1,565 @@
+{
+  "tenant": "default",
+  "corpus_size": 5,
+  "total_questions": 10,
+  "corpus_size_note": "The database corpus contains 5 chunks. In a corpus of 5 chunks, requesting top-20 candidates retrieves the entire corpus if unfiltered. Therefore, raw Recall@5 and Recall@20 reach 100% due to the small corpus size (corpus ceiling effect). The Mean Reciprocal Rank (MRR=0.9500) and Mean Average Precision (MAP=0.8639) reflect actual rank ordering quality.",
+  "raw_retrieval_summary": {
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "recall@20": 1.0,
+    "mrr": 0.95,
+    "map": 0.8638888888888889
+  },
+  "filtered_retrieval_summary": {
+    "similarity_threshold": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "recall@20": 1.0,
+    "mrr": 0.95,
+    "map": 0.8638888888888889
+  },
+  "raw_details": [
+    {
+      "query_index": 1,
+      "question": "What is Shardul Hingane's CGPA in B.Tech?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        5,
+        4,
+        3
+      ],
+      "similarity_scores": [
+        0.7463,
+        0.6549,
+        0.6129,
+        0.6116,
+        0.5616
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 2,
+      "question": "Which institute is Shardul Hingane pursuing his B.Tech from?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "similarity_scores": [
+        0.7409,
+        0.6254,
+        0.6031,
+        0.6019,
+        0.5452
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 3,
+      "question": "How many Data Structures and Algorithms problems has Shardul solved?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "similarity_scores": [
+        0.7031,
+        0.6275,
+        0.6107,
+        0.6042,
+        0.5715
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 4,
+      "question": "What technologies are used in the AI Support Copilot project?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "similarity_scores": [
+        0.6509,
+        0.6339,
+        0.6235,
+        0.6123,
+        0.5878
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 5,
+      "question": "What confidence threshold is used to gate auto-resolution in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.5753,
+        0.5507,
+        0.5387,
+        0.5316,
+        0.5009
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 6,
+      "question": "Which retrieval techniques are implemented in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.6337,
+        0.5959,
+        0.5877,
+        0.5671,
+        0.5598
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 7,
+      "question": "How does the AI Support Copilot enforce tenant isolation?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.5759,
+        0.5673,
+        0.545,
+        0.5278,
+        0.5233
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 8,
+      "question": "What P99 latency and throughput were achieved by the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        1
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.7361,
+        0.7324,
+        0.5992,
+        0.5961,
+        0.5556
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 0.5,
+      "average_precision": 0.6388888888888888
+    },
+    {
+      "query_index": 9,
+      "question": "How many test cases were used to validate SSRF protection in the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.6978,
+        0.6719,
+        0.594,
+        0.5594,
+        0.5089
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 10,
+      "question": "What latency reduction was achieved using Redis cache-aside in the URL Shortener project?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.7746,
+        0.7523,
+        0.6309,
+        0.6249,
+        0.5701
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    }
+  ],
+  "filtered_details": [
+    {
+      "query_index": 1,
+      "question": "What is Shardul Hingane's CGPA in B.Tech?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        5,
+        4,
+        3
+      ],
+      "similarity_scores": [
+        0.7463,
+        0.6549,
+        0.6129,
+        0.6116,
+        0.5616
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 2,
+      "question": "Which institute is Shardul Hingane pursuing his B.Tech from?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "similarity_scores": [
+        0.7409,
+        0.6254,
+        0.6031,
+        0.6019,
+        0.5452
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 3,
+      "question": "How many Data Structures and Algorithms problems has Shardul solved?",
+      "expected_chunks": [
+        1
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "similarity_scores": [
+        0.7031,
+        0.6275,
+        0.6107,
+        0.6042,
+        0.5715
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 4,
+      "question": "What technologies are used in the AI Support Copilot project?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "similarity_scores": [
+        0.6509,
+        0.6339,
+        0.6235,
+        0.6123,
+        0.5878
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 5,
+      "question": "What confidence threshold is used to gate auto-resolution in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.5753,
+        0.5507,
+        0.5387,
+        0.5316,
+        0.5009
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 6,
+      "question": "Which retrieval techniques are implemented in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.6337,
+        0.5959,
+        0.5877,
+        0.5671,
+        0.5598
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 7,
+      "question": "How does the AI Support Copilot enforce tenant isolation?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "retrieved_chunk_ids": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ],
+      "similarity_scores": [
+        0.5759,
+        0.5673,
+        0.545,
+        0.5278,
+        0.5233
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 0.75
+    },
+    {
+      "query_index": 8,
+      "question": "What P99 latency and throughput were achieved by the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        1
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.7361,
+        0.7324,
+        0.5992,
+        0.5961,
+        0.5556
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 0.5,
+      "average_precision": 0.6388888888888888
+    },
+    {
+      "query_index": 9,
+      "question": "How many test cases were used to validate SSRF protection in the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.6978,
+        0.6719,
+        0.594,
+        0.5594,
+        0.5089
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    },
+    {
+      "query_index": 10,
+      "question": "What latency reduction was achieved using Redis cache-aside in the URL Shortener project?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "retrieved_chunk_ids": [
+        4,
+        3,
+        2,
+        1,
+        5
+      ],
+      "similarity_scores": [
+        0.7746,
+        0.7523,
+        0.6309,
+        0.6249,
+        0.5701
+      ],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "recall@20": 1.0,
+      "reciprocal_rank": 1.0,
+      "average_precision": 1.0
+    }
+  ]
+}

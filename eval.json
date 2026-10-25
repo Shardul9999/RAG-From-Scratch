@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What is Shardul Hingane's CGPA in B.Tech?",
+    "Expected chunk": [
+      1
+    ],
+    "answer": "Shardul Hingane's CGPA in B.Tech is 8.5/10."
+  },
+  {
+    "question": "Which institute is Shardul Hingane pursuing his B.Tech from?",
+    "Expected chunk": [
+      1
+    ],
+    "answer": "Shardul Hingane is pursuing his B.Tech in Information Technology from Shri Guru Gobind Singhji Institute of Engineering and Technology in Nanded, Maharashtra."
+  },
+  {
+    "question": "How many Data Structures and Algorithms problems has Shardul solved?",
+    "Expected chunk": [
+      1
+    ],
+    "answer": "Shardul Hingane has solved over 400 Data Structures and Algorithms problems on platforms like LeetCode and GeeksforGeeks."
+  },
+  {
+    "question": "What technologies are used in the AI Support Copilot project?",
+    "Expected chunk": [
+      1,
+      2
+    ],
+    "answer": "The AI Support Copilot project utilizes FastAPI, Celery, Redis, PostgreSQL, pgvector, and Gemini."
+  },
+  {
+    "question": "What confidence threshold is used to gate auto-resolution in the AI Support Copilot?",
+    "Expected chunk": [
+      1,
+      2
+    ],
+    "answer": "In the AI Support Copilot project, auto-resolution is gated on a 0.72 confidence threshold, with low-confidence verdicts being auto-downgraded for escalation."
+  },
+  {
+    "question": "Which retrieval techniques are implemented in the AI Support Copilot?",
+    "Expected chunk": [
+      1,
+      2
+    ],
+    "answer": "The AI Support Copilot implements hybrid retrieval using `pgvector` HNSW and `tsvector` keyword search, which are fused by reciprocal rank fusion and then reranked."
+  },
+  {
+    "question": "How does the AI Support Copilot enforce tenant isolation?",
+    "Expected chunk": [
+      1,
+      2
+    ],
+    "answer": "The AI Support Copilot enforces tenant isolation using PostgreSQL Row-Level Security and a least-privilege role. This design ensures that if a tenant filter is missing, it defaults to a closed state instead of potentially leaking data."
+  },
+  {
+    "question": "What P99 latency and throughput were achieved by the URL Shortener API?",
+    "Expected chunk": [
+      2,
+      3,
+      1
+    ],
+    "answer": "The URL Shortener API achieved an 8ms P99 latency and a throughput of 1,200 requests per second on a single instance under k6 load testing."
+  },
+  {
+    "question": "How many test cases were used to validate SSRF protection in the URL Shortener API?",
+    "Expected chunk": [
+      2,
+      3,
+      4
+    ],
+    "answer": "The URL Shortener API's SSRF protection was validated by 9 parametrized pytest cases."
+  },
+  {
+    "question": "What latency reduction was achieved using Redis cache-aside in the URL Shortener project?",
+    "Expected chunk": [
+      2,
+      3,
+      4
+    ],
+    "answer": "In the URL Shortener project, using Redis cache-aside achieved a 6x latency reduction, decreasing it from 40ms for uncached Postgres lookups to 7ms for cached Redis reads."
+  }
+]

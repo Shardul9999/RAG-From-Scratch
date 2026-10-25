@@ -1,0 +1,689 @@
+{
+  "tenant": "default",
+  "corpus_size": 5,
+  "total_questions": 10,
+  "model": "BAAI/bge-reranker-base",
+  "comparison": {
+    "baseline_recall@5": 1.0,
+    "reranked_recall@5": 1.0,
+    "recall@5_delta": 0.0,
+    "baseline_mrr": 0.95,
+    "reranked_mrr": 1.0,
+    "mrr_delta": 0.050000000000000044,
+    "baseline_map": 0.8638888888888889,
+    "reranked_map": 0.9866666666666667,
+    "map_delta": 0.12277777777777776
+  },
+  "details": [
+    {
+      "query_index": 1,
+      "question": "What is Shardul Hingane's CGPA in B.Tech?",
+      "expected_chunks": [
+        1
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          2,
+          5,
+          4,
+          3
+        ],
+        "scores": [
+          0.7463,
+          0.6549,
+          0.6129,
+          0.6116,
+          0.5616
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "reranked": {
+        "chunk_ids": [
+          1,
+          2,
+          4,
+          5,
+          3
+        ],
+        "scores": [
+          0.9996,
+          0.0004,
+          0.0003,
+          0.0001,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.0,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 1,
+            "rank_shift": 0,
+            "movement": "unchanged"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 2,
+      "question": "Which institute is Shardul Hingane pursuing his B.Tech from?",
+      "expected_chunks": [
+        1
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          2,
+          4,
+          5,
+          3
+        ],
+        "scores": [
+          0.7409,
+          0.6254,
+          0.6031,
+          0.6019,
+          0.5452
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "reranked": {
+        "chunk_ids": [
+          1,
+          2,
+          5,
+          4,
+          3
+        ],
+        "scores": [
+          0.9983,
+          0.0001,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.0,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 1,
+            "rank_shift": 0,
+            "movement": "unchanged"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 3,
+      "question": "How many Data Structures and Algorithms problems has Shardul solved?",
+      "expected_chunks": [
+        1
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          5,
+          4,
+          2,
+          3
+        ],
+        "scores": [
+          0.7031,
+          0.6275,
+          0.6107,
+          0.6042,
+          0.5715
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "reranked": {
+        "chunk_ids": [
+          1,
+          4,
+          5,
+          2,
+          3
+        ],
+        "scores": [
+          0.9999,
+          0.0503,
+          0.013,
+          0.0001,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.0,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 1,
+            "rank_shift": 0,
+            "movement": "unchanged"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 4,
+      "question": "What technologies are used in the AI Support Copilot project?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          5,
+          4,
+          2,
+          3
+        ],
+        "scores": [
+          0.6509,
+          0.6339,
+          0.6235,
+          0.6123,
+          0.5878
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 0.75
+      },
+      "reranked": {
+        "chunk_ids": [
+          2,
+          1,
+          4,
+          5,
+          3
+        ],
+        "scores": [
+          0.9904,
+          0.9667,
+          0.3693,
+          0.0069,
+          0.0062
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.25,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          },
+          {
+            "chunk_id": 2,
+            "baseline_rank": 4,
+            "reranked_rank": 1,
+            "rank_shift": 3,
+            "movement": "improved"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 5,
+      "question": "What confidence threshold is used to gate auto-resolution in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          4,
+          3,
+          2,
+          5
+        ],
+        "scores": [
+          0.5753,
+          0.5507,
+          0.5387,
+          0.5316,
+          0.5009
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 0.75
+      },
+      "reranked": {
+        "chunk_ids": [
+          2,
+          1,
+          5,
+          4,
+          3
+        ],
+        "scores": [
+          0.9995,
+          0.2212,
+          0.0001,
+          0.0,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.25,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          },
+          {
+            "chunk_id": 2,
+            "baseline_rank": 4,
+            "reranked_rank": 1,
+            "rank_shift": 3,
+            "movement": "improved"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 6,
+      "question": "Which retrieval techniques are implemented in the AI Support Copilot?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          4,
+          3,
+          2,
+          5
+        ],
+        "scores": [
+          0.6337,
+          0.5959,
+          0.5877,
+          0.5671,
+          0.5598
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 0.75
+      },
+      "reranked": {
+        "chunk_ids": [
+          2,
+          1,
+          4,
+          5,
+          3
+        ],
+        "scores": [
+          0.9982,
+          0.9967,
+          0.0064,
+          0.0006,
+          0.0002
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.25,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          },
+          {
+            "chunk_id": 2,
+            "baseline_rank": 4,
+            "reranked_rank": 1,
+            "rank_shift": 3,
+            "movement": "improved"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 7,
+      "question": "How does the AI Support Copilot enforce tenant isolation?",
+      "expected_chunks": [
+        1,
+        2
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          1,
+          4,
+          3,
+          2,
+          5
+        ],
+        "scores": [
+          0.5759,
+          0.5673,
+          0.545,
+          0.5278,
+          0.5233
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 0.75
+      },
+      "reranked": {
+        "chunk_ids": [
+          2,
+          1,
+          4,
+          3,
+          5
+        ],
+        "scores": [
+          0.9971,
+          0.8846,
+          0.0002,
+          0.0,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.25,
+        "chunk_movements": [
+          {
+            "chunk_id": 1,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          },
+          {
+            "chunk_id": 2,
+            "baseline_rank": 4,
+            "reranked_rank": 1,
+            "rank_shift": 3,
+            "movement": "improved"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 8,
+      "question": "What P99 latency and throughput were achieved by the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        1
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          4,
+          3,
+          2,
+          1,
+          5
+        ],
+        "scores": [
+          0.7361,
+          0.7324,
+          0.5992,
+          0.5961,
+          0.5556
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 0.5,
+        "average_precision": 0.6388888888888888
+      },
+      "reranked": {
+        "chunk_ids": [
+          3,
+          2,
+          4,
+          5,
+          1
+        ],
+        "scores": [
+          0.9947,
+          0.0055,
+          0.0016,
+          0.0001,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 0.8666666666666667
+      },
+      "deltas": {
+        "mrr_delta": 0.5,
+        "map_delta": 0.22777777777777786,
+        "chunk_movements": [
+          {
+            "chunk_id": 2,
+            "baseline_rank": 3,
+            "reranked_rank": 2,
+            "rank_shift": 1,
+            "movement": "improved"
+          },
+          {
+            "chunk_id": 3,
+            "baseline_rank": 2,
+            "reranked_rank": 1,
+            "rank_shift": 1,
+            "movement": "improved"
+          },
+          {
+            "chunk_id": 1,
+            "baseline_rank": 4,
+            "reranked_rank": 5,
+            "rank_shift": -1,
+            "movement": "declined"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 9,
+      "question": "How many test cases were used to validate SSRF protection in the URL Shortener API?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          4,
+          3,
+          2,
+          1,
+          5
+        ],
+        "scores": [
+          0.6978,
+          0.6719,
+          0.594,
+          0.5594,
+          0.5089
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "reranked": {
+        "chunk_ids": [
+          3,
+          4,
+          2,
+          5,
+          1
+        ],
+        "scores": [
+          0.9836,
+          0.6256,
+          0.0176,
+          0.0001,
+          0.0
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.0,
+        "chunk_movements": [
+          {
+            "chunk_id": 2,
+            "baseline_rank": 3,
+            "reranked_rank": 3,
+            "rank_shift": 0,
+            "movement": "unchanged"
+          },
+          {
+            "chunk_id": 3,
+            "baseline_rank": 2,
+            "reranked_rank": 1,
+            "rank_shift": 1,
+            "movement": "improved"
+          },
+          {
+            "chunk_id": 4,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          }
+        ]
+      }
+    },
+    {
+      "query_index": 10,
+      "question": "What latency reduction was achieved using Redis cache-aside in the URL Shortener project?",
+      "expected_chunks": [
+        2,
+        3,
+        4
+      ],
+      "missing_from_candidates": [],
+      "baseline": {
+        "chunk_ids": [
+          4,
+          3,
+          2,
+          1,
+          5
+        ],
+        "scores": [
+          0.7746,
+          0.7523,
+          0.6309,
+          0.6249,
+          0.5701
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "reranked": {
+        "chunk_ids": [
+          3,
+          4,
+          2,
+          1,
+          5
+        ],
+        "scores": [
+          0.9992,
+          0.9977,
+          0.0514,
+          0.0072,
+          0.0002
+        ],
+        "recall@5": 1.0,
+        "reciprocal_rank": 1.0,
+        "average_precision": 1.0
+      },
+      "deltas": {
+        "mrr_delta": 0.0,
+        "map_delta": 0.0,
+        "chunk_movements": [
+          {
+            "chunk_id": 2,
+            "baseline_rank": 3,
+            "reranked_rank": 3,
+            "rank_shift": 0,
+            "movement": "unchanged"
+          },
+          {
+            "chunk_id": 3,
+            "baseline_rank": 2,
+            "reranked_rank": 1,
+            "rank_shift": 1,
+            "movement": "improved"
+          },
+          {
+            "chunk_id": 4,
+            "baseline_rank": 1,
+            "reranked_rank": 2,
+            "rank_shift": -1,
+            "movement": "declined"
+          }
+        ]
+      }
+    }
+  ]
+}
